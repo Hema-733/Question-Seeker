@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Quiz Extractor",
+  "version": "1.0",
+  "description": "Automates the extraction of multiple-choice questions from a web portal.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.example.com/*" 
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
