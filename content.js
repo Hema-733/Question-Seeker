@@ -89,8 +89,9 @@ async function startExtraction() {
     }
   }
 
-  // Trigger download when finished
-  downloadFile(allQuestions.join('\n\n'));
+  // Trigger raw text download
+  const allQuestionsStr = allQuestions.join('\n\n');
+  downloadFile(allQuestionsStr);
   
   try {
     chrome.runtime.sendMessage({ action: "extractionComplete" });

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mock Quiz Portal</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; background-color: #f3f4f6; }
+    .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .header-info { color: #6b7280; font-size: 14px; margin-bottom: 20px; }
+    h2 { font-size: 20px; color: #111827; }
+    .space-y-2 > div { 
+      background: #f9fafb; border: 1px solid #e5e7eb; padding: 15px; margin-top: 10px;
+      border-radius: 6px; cursor: pointer; transition: background 0.2s; 
+    }
+    .space-y-2 > div:hover { background: #f3f4f6; }
+    .footer { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+    button { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn-prev { background: #e5e7eb; color: #374151; }
+    .btn-next { background: #2563eb; color: white; }
+    .badge { background: #fef3c7; color: #d97706; padding: 4px 8px; border-radius: 12px; font-size: 12px; display: inline-block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header-info" id="progress-text">Question 1 of 3</div>
+  
+  <h2 id="question-text">Which of the following is not a valid JavaScript data type?</h2>
+  
+  <div class="badge">Next pending review</div> <!-- Mocking the badge to ensure our script ignores it -->
+  
+  <div class="space-y-2" id="options-container">
+    <div>A String</div>
+    <div>B Boolean</div>
+    <div>C Float</div>
+    <div>D Undefined</div>
+  </div>
+
+  <div class="footer">
+    <button class="btn-prev">Previous</button>
+    <button class="btn-next" id="next-btn">Next &gt;</button>
+  </div>
+</div>
+
+<script>
+  // Mock React SPA state
+  let currentQuestion = 1;
+  const totalQuestions = 3;
+
+  const mockQuestions = [
+    {
+      q: "Which of the following is not a valid JavaScript data type?",
+      options: ["A String", "B Boolean", "C Float", "D Undefined"]
+    },
+    {
+      q: "What does CSS stand for?",
+      options: ["A Computer Style Sheets", "B Cascading Style Sheets", "C Creative Style System", "D Colorful Style Sheets"]
+    },
+    {
+      q: "Which company created React.js?",
+      options: ["A Google", "B Facebook (Meta)", "C Microsoft", "D Amazon"]
+    }
+  ];
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    if (currentQuestion < totalQuestions) {
+      // Simulate network load time
+      document.body.style.opacity = '0.5';
+      
+      setTimeout(() => {
+        currentQuestion++;
+        document.getElementById('progress-text').innerText = `Question ${currentQuestion} of ${totalQuestions}`;
+        
+        const qData = mockQuestions[currentQuestion - 1];
+        document.getElementById('question-text').innerText = qData.q;
+        
+        const optsContainer = document.getElementById('options-container');
+        optsContainer.innerHTML = '';
+        qData.options.forEach(opt => {
+          const div = document.createElement('div');
+          div.innerText = opt;
+          optsContainer.appendChild(div);
+        });
+        
+        document.body.style.opacity = '1';
+        
+        if (currentQuestion === totalQuestions) {
+          document.getElementById('next-btn').innerText = "Mark as Complete";
+        }
+      }, 500); // 500ms fake load time
+    } else {
+      alert("Test finished!");
+    }
+  });
+</script>
+
+</body>
+</html>
